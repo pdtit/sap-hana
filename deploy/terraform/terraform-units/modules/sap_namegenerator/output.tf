@@ -12,7 +12,7 @@ output naming {
       VNET = [local.vnet_sa_name], 
       LIBRARY = [local.library_sa_name,local.state_sa_name]
     }
-    resource_suffixes = var.resource_suffixes
+    resource_suffixes = local.resource_suffixes
     virtualmachine_names = {
       ANYDB = local.anydb_server_names
       ANYDB_HA = local.anydb_server_names_ha
