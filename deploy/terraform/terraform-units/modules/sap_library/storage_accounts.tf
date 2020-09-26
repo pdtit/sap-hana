@@ -4,14 +4,14 @@
 */
 
 // Imports existing storage account to use for tfstate
-data "azurerm_storage_account" "storage_tfstate" {
+data azurerm_storage_account "storage_tfstate" {
   count               = local.sa_tfstate_exists ? 1 : 0
   name                = split("/", local.sa_tfstate_arm_id)[8]
   resource_group_name = split("/", local.sa_tfstate_arm_id)[4]
 }
 
 // Creates storage account for storing tfstate
-resource "azurerm_storage_account" "storage_tfstate" {
+resource azurerm_storage_account "storage_tfstate" {
   count                     = local.sa_tfstate_exists ? 0 : 1
   name                      = local.sa_tfstate_name
   resource_group_name       = local.rg_library.name
@@ -28,14 +28,14 @@ resource "azurerm_storage_account" "storage_tfstate" {
   }
 }
 
-data "azurerm_storage_container" "storagecontainer_tfstate" {
+data azurerm_storage_container "storagecontainer_tfstate" {
   count                = local.sa_tfstate_container_exists ? 1 : 0
   name                 = local.sa_tfstate_container_name
   storage_account_name = local.sa_tfstate.name
 }
 
 // Creates the storage container inside the storage account for sapsystem
-resource "azurerm_storage_container" "storagecontainer_tfstate" {
+resource azurerm_storage_container "storagecontainer_tfstate" {
   count                 = local.sa_tfstate_container_exists ? 0 : 1
   name                  = local.sa_tfstate_container_name
   storage_account_name  = local.sa_tfstate.name
@@ -43,14 +43,14 @@ resource "azurerm_storage_container" "storagecontainer_tfstate" {
 }
 
 // Imports existing storage account for storing SAP bits
-data "azurerm_storage_account" "storage_sapbits" {
+data azurerm_storage_account "storage_sapbits" {
   count               = local.sa_sapbits_exists ? 1 : 0
   name                = split("/", local.sa_sapbits_arm_id)[8]
   resource_group_name = split("/", local.sa_sapbits_arm_id)[4]
 }
 
 // Creates storage account for storing SAP bits
-resource "azurerm_storage_account" "storage_sapbits" {
+resource azurerm_storage_account "storage_sapbits" {
   count                     = local.sa_sapbits_exists ? 0 : 1
   name                      = local.sa_sapbits_name
   resource_group_name       = local.rg_library.name
@@ -65,14 +65,14 @@ resource "azurerm_storage_account" "storage_sapbits" {
 }
 
 // Imports existing storage blob container for SAP bits
-data "azurerm_storage_container" "storagecontainer_sapbits" {
+data azurerm_storage_container "storagecontainer_sapbits" {
   count                = (local.sa_sapbits_blob_container_enable && local.sa_sapbits_blob_container_exists) ? 1 : 0
   name                 = local.sa_sapbits_blob_container_name
   storage_account_name = local.sa_sapbits.name
 }
 
 // Creates the storage container inside the storage account for SAP bits
-resource "azurerm_storage_container" "storagecontainer_sapbits" {
+resource azurerm_storage_container "storagecontainer_sapbits" {
   count                 = (local.sa_sapbits_blob_container_enable && ! local.sa_sapbits_blob_container_exists) ? 1 : 0
   name                  = local.sa_sapbits_blob_container_name
   storage_account_name  = local.sa_sapbits.name
@@ -80,7 +80,7 @@ resource "azurerm_storage_container" "storagecontainer_sapbits" {
 }
 
 // Creates file share inside the storage account for SAP bits
-resource "azurerm_storage_share" "fileshare_sapbits" {
+resource azurerm_storage_share "fileshare_sapbits" {
   count                = (local.sa_sapbits_file_share_enable && ! local.sa_sapbits_file_share_exists) ? 1 : 0
   name                 = local.sa_sapbits_file_share_name
   storage_account_name = local.sa_sapbits.name
