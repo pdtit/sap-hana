@@ -25,7 +25,7 @@ locals {
   // Storage account for sapbits
   sa_sapbits_arm_id                   = try(var.storage_account_sapbits.arm_id, "")
   sa_sapbits_exists                   = length(local.sa_sapbits_arm_id) > 0 ? true : false
-  sa_sapbits_name                     = local.sa_sapbits_exists ? split("/", local.sa_sapbits_arm_id)[8] : local.storageaccount_names[0]
+  sa_sapbits_name                     = local.sa_sapbits_exists ? split("/", local.sa_sapbits_arm_id)[8] : local.storageaccount_names.library_storageaccount_name
   sa_sapbits_account_tier             = local.sa_sapbits_exists ? "" : try(var.storage_account_sapbits.account_tier, "Standard")
   sa_sapbits_account_replication_type = local.sa_sapbits_exists ? "" : try(var.storage_account_sapbits.account_replication_type, "LRS")
   sa_sapbits_account_kind             = local.sa_sapbits_exists ? "" : try(var.storage_account_sapbits.account_kind, "StorageV2")
@@ -50,7 +50,7 @@ locals {
   sa_tfstate_account_replication_type = local.sa_sapbits_exists ? "" : try(var.storage_account_tfstate.account_replication_type, "LRS")
   sa_tfstate_account_kind             = local.sa_sapbits_exists ? "" : try(var.storage_account_tfstate.account_kind, "StorageV2")
   sa_tfstate_container_access_type    = "private"
-  sa_tfstate_name                     = local.sa_tfstate_exists ? split("/", local.sa_tfstate_arm_id)[8] : local.storageaccount_names[1]
+  sa_tfstate_name                     = local.sa_tfstate_exists ? split("/", local.sa_tfstate_arm_id)[8] : local.storageaccount_names.terraformstate_storageaccount_name
 
   sa_tfstate_enable_secure_transfer  = true
   sa_tfstate_delete_retention_policy = 7
