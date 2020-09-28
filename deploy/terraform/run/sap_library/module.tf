@@ -15,7 +15,7 @@ module sap_namegenerator {
   source      = "../../terraform-units/modules/sap_namegenerator"
   environment = lower(try(var.infrastructure.landscape, ""))
   location    = try(var.infrastructure.region, "")
-  random-id   = random_id.lib-random-id.hex
+  random_id   = random_id.lib-random-id.hex
 
   //These are not needed for the library
   codename             = ""
