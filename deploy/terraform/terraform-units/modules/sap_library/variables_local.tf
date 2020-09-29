@@ -31,7 +31,6 @@ locals {
   sa_sapbits_account_kind             = local.sa_sapbits_exists ? "" : try(var.storage_account_sapbits.account_kind, "StorageV2")
   sa_sapbits_enable_secure_transfer   = true
 
-
   // File share for sapbits
   sa_sapbits_file_share_enable = try(var.storage_account_sapbits.file_share.enable_deployment, true)
   sa_sapbits_file_share_exists = try(var.storage_account_sapbits.file_share.is_existing, false)
